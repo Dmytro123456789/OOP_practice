@@ -1,0 +1,4 @@
+#ifndef PASSENGERTRAIN_H
+#define PASSENGERTRAIN_H
+
+#endif // PASSENGERTRAIN_H
