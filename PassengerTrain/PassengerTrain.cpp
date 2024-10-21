@@ -1,5 +1,4 @@
 #include "PassengerTrain.h"
-
 using namespace std;
 
 PassengerTrain::PassengerTrain()
@@ -32,7 +31,6 @@ istream& operator>>(istream& in, PassengerTrain& train) {
     cout << "Введіть номер поїзда: ";
     in >> train.trainNumber;
     in.ignore();
-
     cout << "Введіть назву поїзда: ";
     getline(in, train.name);
     cout << "Введіть час відправки: ";
@@ -72,4 +70,19 @@ ostream& operator<<(ostream& out, const PassengerTrain& train) {
     out << "Люкс місця: " << train.luxurySeats << endl;
 
     return out;
+}
+
+bool PassengerTrain::operator==(const PassengerTrain& other) const {
+    return (id == other.id &&
+            trainNumber == other.trainNumber &&
+            name == other.name &&
+            departureTime == other.departureTime &&
+            departureStation == other.departureStation &&
+            destinationStation == other.destinationStation &&
+            route == other.route &&
+            travelDuration == other.travelDuration &&
+            generalSeats == other.generalSeats &&
+            coupeSeats == other.coupeSeats &&
+            reservedSeats == other.reservedSeats &&
+            luxurySeats == other.luxurySeats);
 }

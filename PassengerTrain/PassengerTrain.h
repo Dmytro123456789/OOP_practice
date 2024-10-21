@@ -46,9 +46,9 @@ public:
     void setName(const string& name) { this->name = name; }
     void setGeneralSeats(int seats) { generalSeats = seats; }
 
-    friend  istream& operator>>( istream& in, PassengerTrain& train);
-
-    friend  ostream& operator<<( ostream& out, const PassengerTrain& train);
+    friend istream& operator>>(istream& in, PassengerTrain& train);
+    friend ostream& operator<<(ostream& out, const PassengerTrain& train);
+    bool operator==(const PassengerTrain& other) const;
 };
 
 #endif // PASSENGERTRAIN_H

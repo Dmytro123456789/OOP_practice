@@ -18,5 +18,17 @@ int main() {
     cout << "\nІнформація про поїзди:" << endl;
     cout << object1 << endl << object2 << endl << object3;
 
+    if (object1 == object2) {
+        cout << "\nПерший та другий поїзди рівні за всіма параметрами." << endl;
+    } else {
+        cout << "\nПерший та другий поїзди відрізняються." << endl;
+    }
+
+    if (object1 == object3) {
+        cout << "Перший та третій поїзди рівні за всіма параметрами." << endl;
+    } else {
+        cout << "Перший та третій поїзди відрізняються." << endl;
+    }
+
     return 0;
 }
