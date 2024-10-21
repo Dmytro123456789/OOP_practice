@@ -1,4 +1,6 @@
 #include "PassengerTrain.h"
+#include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -7,9 +9,9 @@ PassengerTrain::PassengerTrain()
     destinationStation(""), route(""), travelDuration(0.0),
     generalSeats(0), coupeSeats(0), reservedSeats(0), luxurySeats(0) {}
 
-PassengerTrain::PassengerTrain(int id, int trainNumber, const  string& name, const  string& departureTime,
-                               const  string& departureStation, const  string& destinationStation,
-                               const  string& route, double travelDuration,
+PassengerTrain::PassengerTrain(int id, int trainNumber, const string& name, const string& departureTime,
+                               const string& departureStation, const string& destinationStation,
+                               const string& route, double travelDuration,
                                int generalSeats, int coupeSeats, int reservedSeats, int luxurySeats)
     : id(id), trainNumber(trainNumber), name(name), departureTime(departureTime),
     departureStation(departureStation), destinationStation(destinationStation),
@@ -26,28 +28,33 @@ PassengerTrain::PassengerTrain(const PassengerTrain& other)
 
 PassengerTrain::~PassengerTrain() {}
 
-int PassengerTrain::getId() const { return id; }
-int PassengerTrain::getTrainNumber() const { return trainNumber; }
- string PassengerTrain::getName() const { return name; }
- string PassengerTrain::getDepartureTime() const { return departureTime; }
- string PassengerTrain::getDepartureStation() const { return departureStation; }
- string PassengerTrain::getDestinationStation() const { return destinationStation; }
- string PassengerTrain::getRoute() const { return route; }
-double PassengerTrain::getTravelDuration() const { return travelDuration; }
-int PassengerTrain::getGeneralSeats() const { return generalSeats; }
-int PassengerTrain::getCoupeSeats() const { return coupeSeats; }
-int PassengerTrain::getReservedSeats() const { return reservedSeats; }
-int PassengerTrain::getLuxurySeats() const { return luxurySeats; }
+istream& operator>>(istream& in, PassengerTrain& train) {
+    cout << "Введіть ID поїзда: ";
+    in >> train.id;
+    cout << "Введіть номер поїзда: ";
+    in >> train.trainNumber;
+    in.ignore();
 
-void PassengerTrain::setId(int id) { this->id = id; }
-void PassengerTrain::setTrainNumber(int trainNumber) { this->trainNumber = trainNumber; }
-void PassengerTrain::setName(const  string& name) { this->name = name; }
-void PassengerTrain::setDepartureTime(const  string& departureTime) { this->departureTime = departureTime; }
-void PassengerTrain::setDepartureStation(const  string& departureStation) { this->departureStation = departureStation; }
-void PassengerTrain::setDestinationStation(const  string& destinationStation) { this->destinationStation = destinationStation; }
-void PassengerTrain::setRoute(const  string& route) { this->route = route; }
-void PassengerTrain::setTravelDuration(double travelDuration) { this->travelDuration = travelDuration; }
-void PassengerTrain::setGeneralSeats(int generalSeats) { this->generalSeats = generalSeats; }
-void PassengerTrain::setCoupeSeats(int coupeSeats) { this->coupeSeats = coupeSeats; }
-void PassengerTrain::setReservedSeats(int reservedSeats) { this->reservedSeats = reservedSeats; }
-void PassengerTrain::setLuxurySeats(int luxurySeats) { this->luxurySeats = luxurySeats; }
+    cout << "Введіть назву поїзда: ";
+    getline(in, train.name);
+    cout << "Введіть час відправки: ";
+    getline(in, train.departureTime);
+    cout << "Введіть станцію відправлення: ";
+    getline(in, train.departureStation);
+    cout << "Введіть станцію призначення: ";
+    getline(in, train.destinationStation);
+    cout << "Введіть маршрут: ";
+    getline(in, train.route);
+    cout << "Введіть тривалість подорожі (у годинах): ";
+    in >> train.travelDuration;
+    cout << "Введіть кількість загальних місць: ";
+    in >> train.generalSeats;
+    cout << "Введіть кількість місць у купе: ";
+    in >> train.coupeSeats;
+    cout << "Введіть кількість плацкартних місць: ";
+    in >> train.reservedSeats;
+    cout << "Введіть кількість люксових місць: ";
+    in >> train.luxurySeats;
+
+    return in;
+}

@@ -1,8 +1,8 @@
-
 #ifndef PASSENGERTRAIN_H
 #define PASSENGERTRAIN_H
 
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -23,41 +23,30 @@ private:
 
 public:
     PassengerTrain();
-
     PassengerTrain(int id, int trainNumber, const string& name, const string& departureTime,
                    const string& departureStation, const string& destinationStation,
                    const string& route, double travelDuration,
                    int generalSeats, int coupeSeats, int reservedSeats, int luxurySeats);
-
     PassengerTrain(const PassengerTrain& other);
-
     ~PassengerTrain();
 
-    int getId() const;
-    int getTrainNumber() const;
-    string getName() const;
-    string getDepartureTime() const;
-    string getDepartureStation() const;
-    string getDestinationStation() const;
-    string getRoute() const;
-    double getTravelDuration() const;
-    int getGeneralSeats() const;
-    int getCoupeSeats() const;
-    int getReservedSeats() const;
-    int getLuxurySeats() const;
+    int getId() const { return id; }
+    int getTrainNumber() const { return trainNumber; }
+    string getName() const { return name; }
+    string getDepartureTime() const { return departureTime; }
+    string getDepartureStation() const { return departureStation; }
+    string getDestinationStation() const { return destinationStation; }
+    string getRoute() const { return route; }
+    double getTravelDuration() const { return travelDuration; }
+    int getGeneralSeats() const { return generalSeats; }
+    int getCoupeSeats() const { return coupeSeats; }
+    int getReservedSeats() const { return reservedSeats; }
+    int getLuxurySeats() const { return luxurySeats; }
 
-    void setId(int id);
-    void setTrainNumber(int trainNumber);
-    void setName(const string& name);
-    void setDepartureTime(const string& departureTime);
-    void setDepartureStation(const string& departureStation);
-    void setDestinationStation(const string& destinationStation);
-    void setRoute(const string& route);
-    void setTravelDuration(double travelDuration);
-    void setGeneralSeats(int generalSeats);
-    void setCoupeSeats(int coupeSeats);
-    void setReservedSeats(int reservedSeats);
-    void setLuxurySeats(int luxurySeats);
+    void setName(const string& name) { this->name = name; }
+    void setGeneralSeats(int seats) { generalSeats = seats; }
+
+    friend istream& operator>>(istream& in, PassengerTrain& train);
 };
 
 #endif
