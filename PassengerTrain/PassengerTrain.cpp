@@ -1,6 +1,4 @@
 #include "PassengerTrain.h"
-#include <iostream>
-#include <string>
 
 using namespace std;
 
@@ -57,4 +55,21 @@ istream& operator>>(istream& in, PassengerTrain& train) {
     in >> train.luxurySeats;
 
     return in;
+}
+
+ostream& operator<<(ostream& out, const PassengerTrain& train) {
+    out << "ID поїзда: " << train.id << endl;
+    out << "Номер поїзда: " << train.trainNumber << endl;
+    out << "Назва поїзда: " << train.name << endl;
+    out << "Час відправки: " << train.departureTime << endl;
+    out << "Станція відправлення: " << train.departureStation << endl;
+    out << "Станція призначення: " << train.destinationStation << endl;
+    out << "Маршрут: " << train.route << endl;
+    out << "Тривалість подорожі: " << train.travelDuration << " годин" << endl;
+    out << "Загальні місця: " << train.generalSeats << endl;
+    out << "Місця у купе: " << train.coupeSeats << endl;
+    out << "Плацкартні місця: " << train.reservedSeats << endl;
+    out << "Люкс місця: " << train.luxurySeats << endl;
+
+    return out;
 }
