@@ -5,7 +5,9 @@ CONFIG -= qt
 
 SOURCES += \
         PassengerTrain.cpp \
+        Plain.cpp \
         main.cpp
 
 HEADERS += \
+    Base.h \
     PassengerTrain.h
