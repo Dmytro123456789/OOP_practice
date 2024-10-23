@@ -1,10 +1,12 @@
 #include <iostream>
 #include "PassengerTrain.h"
+#include "Plain.h"
 
 using namespace std;
 
 int main() {
     PassengerTrain object1, object2, object3;
+    Plain plane;
 
     cout << "Введіть дані для першого поїзда:" << endl;
     cin >> object1;
@@ -29,6 +31,12 @@ int main() {
     } else {
         cout << "Перший та третій поїзди відрізняються." << endl;
     }
+
+    cout << "\nВведіть дані для літака:" << endl;
+    cin >> plane;
+
+    cout << "\nІнформація про літак:" << endl;
+    cout << plane << endl;
 
     return 0;
 }

@@ -2,7 +2,6 @@
 #define BASE_H
 
 #include <string>
-#include <iostream>
 
 using namespace std;
 
@@ -16,28 +15,27 @@ protected:
     int generalSeats;
 
 public:
-    Base() : id(0), departureStation(""), destinationStation(""), departureTime(""), travelDuration(0.0), generalSeats(0) {}
-
+    Base();
     Base(int id, const string& departureStation, const string& destinationStation,
-         const string& departureTime, double travelDuration, int generalSeats)
-        : id(id), departureStation(departureStation), destinationStation(destinationStation),
-        departureTime(departureTime), travelDuration(travelDuration), generalSeats(generalSeats) {}
+         const string& departureTime, double travelDuration, int generalSeats);
 
+    void displayBaseInfo() const;
+
+    // Геттери
     int getId() const { return id; }
-    string getDepartureStation() const { return departureStation; }
-    string getDestinationStation() const { return destinationStation; }
-    string getDepartureTime() const { return departureTime; }
+    const string& getDepartureStation() const { return departureStation; }
+    const string& getDestinationStation() const { return destinationStation; }
+    const string& getDepartureTime() const { return departureTime; }
     double getTravelDuration() const { return travelDuration; }
     int getGeneralSeats() const { return generalSeats; }
 
-    void displayBaseInfo() const {
-        cout << "ID: " << id << endl;
-        cout << "Пункт відправлення: " << departureStation << endl;
-        cout << "Пункт призначення: " << destinationStation << endl;
-        cout << "Час відправлення: " << departureTime << endl;
-        cout << "Тривалість подорожі: " << travelDuration << " годин" << endl;
-        cout << "Число загальних місць: " << generalSeats << endl;
-    }
+    // Сеттери
+    void setId(int id) { this->id = id; }
+    void setDepartureStation(const string& station) { departureStation = station; }
+    void setDestinationStation(const string& station) { destinationStation = station; }
+    void setDepartureTime(const string& time) { departureTime = time; }
+    void setTravelDuration(double duration) { travelDuration = duration; }
+    void setGeneralSeats(int seats) { generalSeats = seats; }
 };
 
 #endif // BASE_H

@@ -1,30 +1,51 @@
-#include <iostream>
-#include <string>
-#include "Base.h"
+#include "Plain.h"
 
-using namespace std;
+Plain::Plain() : id(0), departurePoint(""), destinationPoint(""),
+    flightNumber(""), departureTime(""), travelDuration(0.0), numberOfSeats(0) {}
 
-class Plain : public Base {
-private:
-    string flightNumber;
+Plain::Plain(int id, const string& departurePoint, const string& destinationPoint,
+             const string& flightNumber, const string& departureTime,
+             double travelDuration, int numberOfSeats)
+    : id(id), departurePoint(departurePoint), destinationPoint(destinationPoint),
+    flightNumber(flightNumber), departureTime(departureTime),
+    travelDuration(travelDuration), numberOfSeats(numberOfSeats) {}
 
-public:
-    Plain() : Base(), flightNumber("") {}
+void Plain::displayInfo() const {
+    cout << "ID: " << id << endl;
+    cout << "Пункт відправлення: " << departurePoint << endl;
+    cout << "Пункт призначення: " << destinationPoint << endl;
+    cout << "Номер рейсу: " << flightNumber << endl;
+    cout << "Час відправлення: " << departureTime << endl;
+    cout << "Тривалість подорожі: " << travelDuration << " годин" << endl;
+    cout << "Кількість місць: " << numberOfSeats << endl;
+}
 
-    Plain(int id, const string& departureStation, const string& destinationStation,
-          const string& flightNumber, const string& departureTime,
-          double travelDuration, int generalSeats)
-        : Base(id, departureStation, destinationStation, departureTime, travelDuration, generalSeats),
-        flightNumber(flightNumber) {}
+istream& operator>>(istream& in, Plain& plane) {
+    cout << "Введіть ID: ";
+    in >> plane.id;
+    cout << "Введіть пункт відправлення: ";
+    in >> plane.departurePoint;
+    cout << "Введіть пункт призначення: ";
+    in >> plane.destinationPoint;
+    cout << "Введіть номер рейсу: ";
+    in >> plane.flightNumber;
+    cout << "Введіть час відправлення: ";
+    in >> plane.departureTime;
+    cout << "Введіть тривалість подорожі: ";
+    in >> plane.travelDuration;
+    cout << "Введіть кількість місць: ";
+    in >> plane.numberOfSeats;
+    return in;
+}
 
-    void displayInfo() const {
-        displayBaseInfo();
-        cout << "Номер рейсу: " << flightNumber << endl;
-    }
-};
+ostream& operator<<(ostream& out, const Plain& plane) {
+    plane.displayInfo();
+    return out;
+}
 
-int main() {
-    Plain flight(1, "Київ", "Лондон", "PS123", "15:30", 3, 180);
-    flight.displayInfo();
-    return 0;
+bool Plain::operator==(const Plain& other) const {
+    return id == other.id && departurePoint == other.departurePoint &&
+           destinationPoint == other.destinationPoint && flightNumber == other.flightNumber &&
+           departureTime == other.departureTime && travelDuration == other.travelDuration &&
+           numberOfSeats == other.numberOfSeats;
 }
