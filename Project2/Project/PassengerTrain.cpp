@@ -59,3 +59,7 @@ bool PassengerTrain::operator==(const PassengerTrain& other) const {
            generalSeats == other.generalSeats && coupeSeats == other.coupeSeats &&
            reservedSeats == other.reservedSeats && luxurySeats == other.luxurySeats;
 }
+
+void PassengerTrain::somePureVirtualMethod() {
+    cout << "Реалізація чисто віртуального методу в класі PassengerTrain." << endl;
+}

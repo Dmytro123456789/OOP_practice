@@ -28,6 +28,8 @@ public:
     friend istream& operator>>(istream& in, PassengerTrain& train);
     friend ostream& operator<<(ostream& out, const PassengerTrain& train);
     bool operator==(const PassengerTrain& other) const;
+
+    void somePureVirtualMethod() override; // Реалізація чисто віртуального методу
 };
 
 #endif // PASSENGERTRAIN_H

@@ -7,7 +7,6 @@ using namespace std;
 int main() {
     system("chcp 65001");
     PassengerTrain object1, object2, object3;
-    Plain plane;
 
     cout << "Введіть дані для першого поїзда:" << endl;
     cin >> object1;
@@ -33,11 +32,12 @@ int main() {
         cout << "Перший та третій поїзди відрізняються." << endl;
     }
 
-    cout << "\nВведіть дані для літака:" << endl;
-    cin >> plane;
+    // Демонстрація поліморфізму
+    Base* trainPtr = new PassengerTrain();
+    trainPtr->somePureVirtualMethod(); // Виклик реалізації чисто віртуального методу
 
-    cout << "\nІнформація про літак:" << endl;
-    cout << plane << endl;
+    Base* planePtr = new Plain();
+    planePtr->somePureVirtualMethod(); // Виклик реалізації чисто віртуального методу
 
     return 0;
 }
