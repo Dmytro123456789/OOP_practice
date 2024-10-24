@@ -1,43 +1,65 @@
 #include <iostream>
 #include "PassengerTrain.h"
 #include "Plain.h"
+#include "Base.h"
 
 using namespace std;
 
+void displayMenu() {
+    cout << "Оберіть тип об'єкта для створення:" << endl;
+    cout << "1. Пасажирський поїзд" << endl;
+    cout << "2. Літак" << endl;
+    cout << "3. Вихід" << endl;
+}
+
 int main() {
     system("chcp 65001");
-    PassengerTrain object1, object2, object3;
+    const int SIZE = 5;
+    Base* objects[SIZE];
 
-    cout << "Введіть дані для першого поїзда:" << endl;
-    cin >> object1;
+    for (int i = 0; i < SIZE; ++i) {
+        displayMenu();
+        int choice;
+        cout << "Ваш вибір: ";
+        cin >> choice;
 
-    cout << "\nВведіть дані для другого поїзда:" << endl;
-    cin >> object2;
-
-    cout << "\nВведіть дані для третього поїзда:" << endl;
-    cin >> object3;
-
-    cout << "\nІнформація про поїзди:" << endl;
-    cout << object1 << endl << object2 << endl << object3;
-
-    if (object1 == object2) {
-        cout << "\nПерший та другий поїзди рівні за всіма параметрами." << endl;
-    } else {
-        cout << "\nПерший та другий поїзди відрізняються." << endl;
+        switch (choice) {
+        case 1: {
+            PassengerTrain* train = new PassengerTrain();
+            cin >> *train;
+            objects[i] = train;
+            break;
+        }
+        case 2: {
+            Plain* plane = new Plain();
+            cin >> *plane;
+            objects[i] = plane;
+            break;
+        }
+        case 3:
+            cout << "Вихід з програми." << endl;
+            return 0;
+        default:
+            cout << "Неправильний вибір. Спробуйте ще раз." << endl;
+            --i;
+            break;
+        }
     }
 
-    if (object1 == object3) {
-        cout << "Перший та третій поїзди рівні за всіма параметрами." << endl;
-    } else {
-        cout << "Перший та третій поїзди відрізняються." << endl;
+    cout << "\nІнформація про створені об'єкти:\n" << endl;
+    for (int i = 0; i < SIZE; ++i) {
+        objects[i]->displayBaseInfo();  // Виклик displayBaseInfo замість displayInfo
+        cout << endl;
     }
 
-    // Демонстрація поліморфізму
-    Base* trainPtr = new PassengerTrain();
-    trainPtr->somePureVirtualMethod(); // Виклик реалізації чисто віртуального методу
+    cout << "Виклик чисто віртуального методу:\n" << endl;
+    for (int i = 0; i < SIZE; ++i) {
+        objects[i]->somePureVirtualMethod();
+    }
 
-    Base* planePtr = new Plain();
-    planePtr->somePureVirtualMethod(); // Виклик реалізації чисто віртуального методу
+    for (int i = 0; i < SIZE; ++i) {
+        delete objects[i];
+    }
 
     return 0;
 }

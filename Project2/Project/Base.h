@@ -20,7 +20,9 @@ public:
          const string& departureTime, double travelDuration, int generalSeats);
 
     virtual void displayBaseInfo() const;
-    virtual void somePureVirtualMethod() = 0; // Чисто віртуальний метод
+    virtual void somePureVirtualMethod() = 0;
+
+    virtual ~Base() = default;
 };
 
 #endif // BASE_H

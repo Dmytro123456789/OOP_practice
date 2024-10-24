@@ -1,24 +1,24 @@
 #ifndef PLAIN_H
 #define PLAIN_H
 
-#include <string>
 #include "Base.h"
-
-using namespace std;
+#include <string>
+#include <iostream>
 
 class Plain : public Base {
 private:
-    string flightNumber;
+    std::string flightNumber;
 
 public:
     Plain();
-    Plain(int id, const string& departureStation, const string& destinationStation,
-          const string& flightNumber, const string& departureTime,
+    Plain(int id, const std::string& departureStation, const std::string& destinationStation,
+          const std::string& flightNumber, const std::string& departureTime,
           double travelDuration, int generalSeats);
 
-    void displayInfo() const;
+    void displayInfo() const ;
+    void somePureVirtualMethod() override;
 
-    void somePureVirtualMethod() override; // Реалізація чисто віртуального методу
+    friend std::istream& operator>>(std::istream& in, Plain& plane);
 };
 
 #endif // PLAIN_H
