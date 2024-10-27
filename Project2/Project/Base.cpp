@@ -1,5 +1,4 @@
 #include "Base.h"
-#include "Plain.h"
 #include <iostream>
 
 Base::Base() : id(0), departureStation(""), destinationStation(""), departureTime(""), travelDuration(0.0), generalSeats(0) {}

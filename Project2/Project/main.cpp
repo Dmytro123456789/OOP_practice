@@ -48,7 +48,7 @@ int main() {
 
     cout << "\nІнформація про створені об'єкти:\n" << endl;
     for (int i = 0; i < SIZE; ++i) {
-        objects[i]->displayBaseInfo();  // Виклик displayBaseInfo замість displayInfo
+        objects[i]->displayBaseInfo();
         cout << endl;
     }
 
