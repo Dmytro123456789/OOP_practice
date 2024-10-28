@@ -17,6 +17,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+
+    void on_pbCreateTrain_clicked();
+
+    void on_pbShowTrain_clicked();
+
+    void on_pbQuit_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
