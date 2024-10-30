@@ -15,7 +15,9 @@ SOURCES += \
     PassengerTrain.cpp \
     Plain.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    showPlain.cpp \
+    showTrain.cpp
 
 HEADERS += \
     Base.h \
@@ -23,12 +25,16 @@ HEADERS += \
     CreateTrain.h \
     PassengerTrain.h \
     Plain.h \
-    mainwindow.h
+    mainwindow.h \
+    showPlain.h \
+    showTrain.h
 
 FORMS += \
     CreatePlain.ui \
     CreateTrain.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    showPlain.ui \
+    showTrain.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
