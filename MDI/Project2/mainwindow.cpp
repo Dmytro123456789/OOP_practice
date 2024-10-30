@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow),
     createTrain(new CreateTrain(this)),
     createPlain(new CreatePlain(this)),
-    plain(nullptr), train(nullptr)  // Додайте train для узгодженості
+    plain(nullptr), train(nullptr)
 {
     ui->setupUi(this);
 
@@ -49,8 +49,8 @@ void MainWindow::on_showPlain_clicked()
                                   "Час вильоту: %4\n"
                                   "Тривалість подорожі: %5\n"
                                   "Кількість загальних місць: %6")
-                              .arg(QString::fromStdString(plain->getDepartureStation()))
-                              .arg(QString::fromStdString(plain->getDestinationStation()))
+                              .arg(QString::fromStdString(plain->getDeparturePoint()))
+                              .arg(QString::fromStdString(plain->getDestinationPoint()))
                               .arg(QString::fromStdString(plain->getFlightNumber()))
                               .arg(QString::fromStdString(plain->getDepartureTime()))
                               .arg(plain->getTravelDuration())
