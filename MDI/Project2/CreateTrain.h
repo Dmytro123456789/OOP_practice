@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "PassengerTrain.h"
+#include "qlistwidget.h"
 
 namespace Ui {
 class createTrain;
@@ -15,19 +16,17 @@ class CreateTrain : public QDialog
 public:
     explicit CreateTrain(QWidget *parent = nullptr);
     ~CreateTrain();
+    void clearFields();
 signals:
-    void trainCreated(PassengerTrain* train);
+
+    void trainCreated(PassengerTrain*);
 
 private slots:
-    void on_pExit_clicked();
 
     void on_btCreateTrain_clicked();
 
-    void on_btnBack_clicked();
-
 private:
     Ui::createTrain *ui;
-    PassengerTrain *train;
 };
 
 #endif // CREATETRAIN_H

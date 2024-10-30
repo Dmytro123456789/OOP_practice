@@ -3,6 +3,8 @@
 
 #include "CreateTrain.h"
 #include "CreatePlain.h"
+#include "showPlain.h"
+#include "showTrain.h"
 #include "Plain.h"
 #include <QMainWindow>
 #include <QCoreApplication>
@@ -34,10 +36,16 @@ private slots:
 
     void on_pExit_clicked();
 
+signals:
+    void trainCreated(PassengerTrain* train);
+    void plainCreated(Plain* plane);
+
 private:
     Ui::MainWindow *ui;
     CreateTrain *createTrain;
     CreatePlain *createPlain;
+    showTrain *showTrainDialog;
+    showPlain *showPlainDialog;
     Plain *plain;
     PassengerTrain *train;
 };

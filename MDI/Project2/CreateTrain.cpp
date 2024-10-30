@@ -1,10 +1,10 @@
 #include "CreateTrain.h"
 #include "ui_CreateTrain.h"
+#include "PassengerTrain.h"
 #include <QMessageBox>
 
-CreateTrain::CreateTrain(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::createTrain)
+CreateTrain::CreateTrain(QWidget *parent)
+    : QDialog(parent), ui(new Ui::createTrain)
 {
     ui->setupUi(this);
 }
@@ -14,49 +14,62 @@ CreateTrain::~CreateTrain()
     delete ui;
 }
 
-void CreateTrain::on_pExit_clicked()
+void CreateTrain::clearFields()
 {
-    QCoreApplication::quit();
+    ui->numberTrain->clear();
+    ui->nameTrain->clear();
+    ui->departureTime->clear();
+    ui->departureStation->clear();
+    ui->destinationStation->clear();
+    ui->route->clear();
+    ui->duration->clear();
+    ui->generalSits->clear();
+    ui->coupeSits->clear();
+    ui->reservedSits->clear();
+    ui->luxurySits->clear();
 }
-
 
 void CreateTrain::on_btCreateTrain_clicked()
 {
-    if (ui->numberTrain->text().isEmpty() || ui->nameTrain->text().isEmpty() ||
-        ui->departureTime->text().isEmpty() || ui->departureStation->text().isEmpty() ||
-        ui->destinationStation->text().isEmpty() || ui->route->text().isEmpty() ||
-        ui->duration->text().isEmpty() || ui->generalSits->text().isEmpty() ||
-        ui->coupeSits->text().isEmpty() || ui->reservedSits->text().isEmpty() ||
-        ui->luxurySits->text().isEmpty()) {
+    QString numberTrain = ui->numberTrain->text();
+    QString nameTrain = ui->nameTrain->text();
+    QString departureTime = ui->departureTime->text();
+    QString departureStation = ui->departureStation->text();
+    QString destinationStation = ui->destinationStation->text();
+    QString route = ui->route->text();
+    QString duration = ui->duration->text();
+    QString generalSits = ui->generalSits->text();
+    QString coupeSits = ui->coupeSits->text();
+    QString reservedSits = ui->reservedSits->text();
+    QString luxurySits = ui->luxurySits->text();
 
-        QMessageBox::warning(this, "Помилка", "Заповніть усі обов’язкові поля!");
+    if (numberTrain.isEmpty() || nameTrain.isEmpty() || departureTime.isEmpty() ||
+        departureStation.isEmpty() || destinationStation.isEmpty() || route.isEmpty() ||
+        duration.isEmpty() || generalSits.isEmpty() || coupeSits.isEmpty() ||
+        reservedSits.isEmpty() || luxurySits.isEmpty()) {
+
+        QMessageBox::critical(this, "Помилка", "Помилка введення даних про Поїзд - деякі поля порожні");
         return;
     }
 
-    int numberTrainE = ui->numberTrain->text().toInt();
-    QString nameTrainE = ui->nameTrain->text();
-    QString departureTimeE = ui->departureTime->text();
-    QString departureStationE = ui->departureStation->text();
-    QString destinationStationE = ui->destinationStation->text();
-    QString routeE = ui->route->text();
-    double durationE = ui->duration->text().toDouble();
-    int generalSitsE = ui->generalSits->text().toInt();
-    int coupeSeatsE = ui->coupeSits->text().toInt();
-    int reservedSeatsE = ui->reservedSits->text().toInt();
-    int luxurySeatsE = ui->luxurySits->text().toInt();
-
-    train = new PassengerTrain(0, numberTrainE, nameTrainE.toStdString(), departureTimeE.toStdString(),
-                               departureStationE.toStdString(), destinationStationE.toStdString(),
-                               routeE.toStdString(), durationE, generalSitsE, coupeSeatsE, reservedSeatsE, luxurySeatsE);
+    PassengerTrain *train = new PassengerTrain(
+        0,
+        numberTrain.toInt(),
+        nameTrain.toStdString(),
+        departureTime.toStdString(),
+        departureStation.toStdString(),
+        destinationStation.toStdString(),
+        route.toStdString(),
+        duration.toDouble(),
+        generalSits.toInt(),
+        coupeSits.toInt(),
+        reservedSits.toInt(),
+        luxurySits.toInt()
+        );
 
     emit trainCreated(train);
 
-    QMessageBox::information(this, "Об’єкт створено", "Новий об'єкт поїзда успішно створено!");
+    QMessageBox::information(this, "Успіх", "Новий об'єкт Поїзд успішно створено!");
+    this->clearFields();
+    this->accept();
 }
-
-
-void CreateTrain::on_btnBack_clicked()
-{
-    this->reject();
-}
-

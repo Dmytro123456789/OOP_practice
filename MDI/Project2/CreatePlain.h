@@ -15,21 +15,15 @@ class CreatePlain : public QDialog
 public:
     explicit CreatePlain(QWidget *parent = nullptr);
     ~CreatePlain();
-     void setPlain(Plain *p);
+     void clearFields();
 signals:
-     void plainCreated(Plain* p);
+     void plainCreated(Plain*);
 private slots:
-    void on_pExit_clicked();
 
     void on_btCreatePlain_clicked();
 
-    void on_btShowInfo_clicked();
-
-    void on_btnBack_clicked();
-
 private:
     Ui::createPlain *ui;
-    Plain *plain;
 };
 
 #endif // CREATEPLAIN_H

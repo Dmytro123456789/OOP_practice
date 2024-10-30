@@ -4,7 +4,7 @@
 #include <QMessageBox>
 
 CreatePlain::CreatePlain(QWidget *parent)
-    : QDialog(parent), ui(new Ui::createPlain), plain(nullptr)
+    : QDialog(parent), ui(new Ui::createPlain)
 {
     ui->setupUi(this);
 }
@@ -14,61 +14,44 @@ CreatePlain::~CreatePlain()
     delete ui;
 }
 
-void CreatePlain::on_pExit_clicked()
+void CreatePlain::clearFields()
 {
-    QCoreApplication::quit();
+    ui->departurePoint->clear();
+    ui->destinationPoint->clear();
+    ui->numberWay->clear();
+    ui->timeFly->clear();
+    ui->durationP->clear();
+    ui->generalSitsP->clear();
 }
 
 void CreatePlain::on_btCreatePlain_clicked()
 {
-    if (ui->departurePoint->text().isEmpty() || ui->destinationPoint->text().isEmpty() ||
-        ui->numberWay->text().isEmpty() || ui->timeFly->text().isEmpty() ||
-        ui->durationP->text().isEmpty() || ui->generalSitsP->text().isEmpty()) {
+    QString departurePoint = ui->departurePoint->text();
+    QString destinationPoint = ui->destinationPoint->text();
+    QString flightNumber = ui->numberWay->text();
+    QString departureTime = ui->timeFly->text();
+    QString travelDuration = ui->durationP->text();
+    QString numberOfSeats = ui->generalSitsP->text();
 
-        QMessageBox::warning(this, "Помилка", "Заповніть усі обов’язкові поля!");
-        return;
+    if (departurePoint.isEmpty() || destinationPoint.isEmpty() || flightNumber.isEmpty() ||
+        departureTime.isEmpty() || travelDuration.isEmpty() || numberOfSeats.isEmpty()) {
+
+        QMessageBox::critical(this, "Помилка", "Помилка введення даних про Літак - деякі поля порожні");
+    } else {
+        Plain *plain = new Plain(
+            0,
+            departurePoint.toStdString(),
+            destinationPoint.toStdString(),
+            flightNumber.toStdString(),
+            departureTime.toStdString(),
+            travelDuration.toDouble(),
+            numberOfSeats.toInt()
+            );
+
+        emit plainCreated(plain);
+
+        QMessageBox::information(this, "Успіх", "Новий об'єкт Літак успішно створено!");
+        this->clearFields();
+        this->accept();
     }
-
-    plain = new Plain(0,
-                      ui->departurePoint->text().toStdString(),
-                      ui->destinationPoint->text().toStdString(),
-                      ui->numberWay->text().toStdString(),
-                      ui->timeFly->text().toStdString(),
-                      ui->durationP->text().toDouble(),
-                      ui->generalSitsP->text().toInt());
-
-    emit plainCreated(plain);
-    QMessageBox::information(this, "Об’єкт створено", "Новий об'єкт літака успішно створено!");
-}
-
-void CreatePlain::on_btShowInfo_clicked()
-{
-    if (!plain) {
-        QMessageBox::warning(this, "Помилка", "Об'єкт літака не створено!");
-        return;
-    }
-
-    QString infoMessage = QString("Пункт відправлення: %1\n"
-                                  "Пункт призначення: %2\n"
-                                  "Номер рейсу: %3\n"
-                                  "Час вильоту: %4\n"
-                                  "Тривалість подорожі: %5\n"
-                                  "Кількість загальних місць: %6")
-                              .arg(QString::fromStdString(plain->getDeparturePoint()))
-                              .arg(QString::fromStdString(plain->getDestinationPoint()))
-                              .arg(QString::fromStdString(plain->getFlightNumber()))
-                              .arg(QString::fromStdString(plain->getDepartureTime()))
-                              .arg(plain->getTravelDuration())
-                              .arg(plain->getGeneralSeats());
-
-    QMessageBox::information(this, "Інформація про об'єкт", infoMessage);
-}
-
-void CreatePlain::setPlain(Plain *p) {
-    plain = p;
-}
-
-void CreatePlain::on_btnBack_clicked()
-{
-    this->reject();
 }
