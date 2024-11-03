@@ -3,12 +3,13 @@
 
 #include "CreateTrain.h"
 #include "CreatePlain.h"
-#include "showPlain.h"
-#include "showTrain.h"
 #include "Plain.h"
 #include <QMainWindow>
 #include <QCoreApplication>
 #include <QMessageBox>
+#include "QListWidgetItem"
+#include <QSqlTableModel>
+#include "sqlitedbmanager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -30,11 +31,11 @@ private slots:
 
     void on_createPlain_clicked();
 
-    void on_showPlain_clicked();
-
-    void on_showTrain_clicked();
-
     void on_pExit_clicked();
+
+    void onPlainCreated(Plain* plainDB);
+
+    void onPassengerTrainCreated(PassengerTrain* trainDB);
 
 signals:
     void trainCreated(PassengerTrain* train);
@@ -42,11 +43,13 @@ signals:
 
 private:
     Ui::MainWindow *ui;
+    sqlitedmanager *dbManager;
     CreateTrain *createTrain;
     CreatePlain *createPlain;
-    showTrain *showTrainDialog;
-    showPlain *showPlainDialog;
     Plain *plain;
     PassengerTrain *train;
+
+    void loadPlainTable();
+    void loadPassengerTrainTable();
 };
 #endif // MAINWINDOW_H

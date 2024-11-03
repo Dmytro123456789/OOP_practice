@@ -28,7 +28,9 @@ public:
     friend istream& operator>>(istream& in, PassengerTrain& train);
     friend ostream& operator<<(ostream& out, const PassengerTrain& train);
     bool operator==(const PassengerTrain& other) const;
-    std::string getName() const { return name; }
+    std::string getName() const {
+        return name;
+    }
     int getTrainNumber() const {
         return trainNumber;
     }

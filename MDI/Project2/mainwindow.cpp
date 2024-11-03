@@ -1,58 +1,86 @@
 #include "mainwindow.h"
-#include "showTrain.h"
 #include "ui_mainwindow.h"
 #include "CreateTrain.h"
 #include "CreatePlain.h"
-#include "showTrain.h"
-#include "showPlain.h"
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+#include <QSqlTableModel>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow),
-    createTrain(new CreateTrain(this)),
-    createPlain(new CreatePlain(this)),
-    showTrainDialog(new showTrain(this)),
-    showPlainDialog(new showPlain(this)),
     plain(nullptr), train(nullptr)
 {
     ui->setupUi(this);
 
-    connect(createPlain, &CreatePlain::plainCreated, this, [this](Plain* plane) {
-        this->plain = plane;
-        emit plainCreated(plane);
-    });
+    try {
+        dbManager = new sqlitedmanager();
+        dbManager->connectToDataBase();
+        if (!dbManager->createTables()) {
+            qCritical() << "Failed to create tables.";
+            QMessageBox::critical(this, "Database Error", "Не вдалося створити таблиці в базі даних.");
+            return;
+        }
+    } catch (const std::runtime_error &e) {
+        qCritical() << "Runtime error:" << e.what();
+        QMessageBox::critical(this, "Database Error", "Не вдалося підключитися до бази даних. Перевірте з'єднання!");
+        return;
+    }
 
-    connect(createTrain, &CreateTrain::trainCreated, this, [this](PassengerTrain* train) {
-        this->train = train;
-        emit trainCreated(train);
-    });
+    loadPlainTable();
+    loadPassengerTrainTable();
+}
 
-    connect(this, &MainWindow::plainCreated, showPlainDialog, &showPlain::onPlainReceived);
-    connect(this, &MainWindow::trainCreated, showTrainDialog, &showTrain::onTrainReceived);
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+    delete dbManager;
 }
 
 void MainWindow::on_createTrain_clicked()
 {
-    createTrain->show();
+    CreateTrain *dialog = new CreateTrain(this);
+    connect(dialog, &CreateTrain::trainCreated, this, &MainWindow::onPassengerTrainCreated);
+    dialog->show();
 }
 
 void MainWindow::on_createPlain_clicked()
 {
-    createPlain->show();
+    CreatePlain *dialog = new CreatePlain(this);
+    connect(dialog, &CreatePlain::plainCreated, this, &MainWindow::onPlainCreated);
+    dialog->show();
 }
 
-void MainWindow::on_showPlain_clicked()
+
+void MainWindow::onPlainCreated(Plain* plainDB)
 {
-    showPlainDialog->show();
+    dbManager->insertIntoTable(*plainDB);
+    loadPlainTable();
 }
 
-void MainWindow::on_showTrain_clicked()
+void MainWindow::onPassengerTrainCreated(PassengerTrain* trainDB)
 {
-    showTrainDialog->show();
+    dbManager->insertIntoTable(*trainDB);
+    loadPassengerTrainTable();
+}
+
+void MainWindow::loadPlainTable()
+{
+    QSqlTableModel *model = new QSqlTableModel(this, dbManager->getDB());
+    model->setTable("plain");
+    model->select();
+
+    ui->tableView->setModel(model);
+    ui->tableView->hideColumn(0);
+}
+
+void MainWindow::loadPassengerTrainTable()
+{
+    QSqlTableModel *model = new QSqlTableModel(this, dbManager->getDB());
+    model->setTable("passengertrain");
+    model->select();
+
+    ui->tableView_2->setModel(model);
+    ui->tableView_2->hideColumn(0);
 }
 
 void MainWindow::on_pExit_clicked()

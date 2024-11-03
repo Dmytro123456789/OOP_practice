@@ -19,7 +19,7 @@ public:
     void clearFields();
 signals:
 
-    void trainCreated(PassengerTrain*);
+    void trainCreated(PassengerTrain* trainDB);
 
 private slots:
 

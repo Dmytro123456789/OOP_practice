@@ -11,7 +11,7 @@ private:
 
 public:
     Plain();
-    Plain(int id, const std::string& departureStation, const std::string& destinationStation,
+    Plain(int id, const std::string& departurePoint, const std::string& destinationPoint,
           const std::string& flightNumber, const std::string& departureTime,
           double travelDuration, int generalSeats);
 

@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,8 +16,7 @@ SOURCES += \
     Plain.cpp \
     main.cpp \
     mainwindow.cpp \
-    showPlain.cpp \
-    showTrain.cpp
+    sqlitedbmanager.cpp
 
 HEADERS += \
     Base.h \
@@ -26,15 +25,12 @@ HEADERS += \
     PassengerTrain.h \
     Plain.h \
     mainwindow.h \
-    showPlain.h \
-    showTrain.h
+    sqlitedbmanager.h
 
 FORMS += \
     CreatePlain.ui \
     CreateTrain.ui \
-    mainwindow.ui \
-    showPlain.ui \
-    showTrain.ui
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
