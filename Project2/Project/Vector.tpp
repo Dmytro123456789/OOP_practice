@@ -1,25 +1,29 @@
-#include "Vector.h"
+// Vector.tpp
+#include <stdexcept>
+
 template <typename T>
-Vector<T>::Vector() {
-    capacity = 10;
+Vector<T>::Vector() : size(0), capacity(1) {
     array = new T[capacity];
-    size = 0;
 }
+
 template <typename T>
 Vector<T>::~Vector() {
     delete[] array;
 }
+
 template <typename T>
-int Vector<T>::getSize() const{
+int Vector<T>::getSize() const {
     return size;
 }
+
 template <typename T>
-int Vector<T>::getCapacity() const{
+int Vector<T>::getCapacity() const {
     return capacity;
 }
+
 template <typename T>
 void Vector<T>::push_back(T element) {
-    if (size >= capacity) {
+    if (size == capacity) {
         capacity *= 2;
         T* newArray = new T[capacity];
         for (int i = 0; i < size; i++) {
@@ -28,26 +32,29 @@ void Vector<T>::push_back(T element) {
         delete[] array;
         array = newArray;
     }
-    array[size] = element;
-    size++;
+    array[size++] = element;
 }
+
 template <typename T>
 void Vector<T>::pop_back() {
     if (size > 0) {
-        size--;
+        --size;
     }
 }
+
 template <typename T>
 T Vector<T>::at(int index) {
-    if (index >= 0 && index < size) {
-        return array[index];
+    if (index < 0 || index >= size) {
+        throw std::out_of_range("Index out of range");
     }
-    throw std::out_of_range("Індекс виходить за межі вектора");
+    return array[index];
 }
+
 template <typename T>
 T& Vector<T>::operator[](int index) {
-    if (index >= 0 && index < size) {
-        return array[index];
+    if (index < 0 || index >= size) {
+        throw std::out_of_range("Index out of range");
     }
-    throw std::out_of_range("Індекс виходить за межі вектора");
+    return array[index];
 }
+

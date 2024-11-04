@@ -18,7 +18,11 @@ public:
     void displayInfo() const;
     void somePureVirtualMethod() override;
 
+    void showInfo() const;
+
     friend std::istream& operator>>(std::istream& in, Plain& plane);
+    friend std::ostream& operator<<(std::ostream& os, const Plain& plane);
+
 };
 
 #endif // PLAIN_H

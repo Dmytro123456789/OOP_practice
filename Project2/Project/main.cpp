@@ -1,73 +1,126 @@
 #include "PassengerTrain.h"
 #include "Plain.h"
-#include "Base.h"
 #include "Vector.h"
-#include <iostream>
-
+#include <vector>
+#include <random>
+#include <algorithm>
 using namespace std;
 
 int showMenu() {
     int choice;
-        cout << "Виберіть тип об'єкта для створення:\n";
-        cout << "1. Пасажирський поїзд\n";
-        cout << "2. Літак\n";
-        cout << "3. Вихід\n";
-        cin >> choice;
+    cout << "Виберіть тип об'єкта для створення:\n";
+    cout << "1. Пасажирський поїзд\n";
+    cout << "2. Літак\n";
+    cout << "3. Вихід\n";
+    cin >> choice;
     return choice;
 }
 
 int main() {
+    srand(0);
     system("chcp 65001");
 
-    // Перевірка роботи з простими типами
-    Vector<int> intVector;
-    intVector.push_back(4);
-    intVector.push_back(1);
-    for (int i = 0; i < intVector.getSize(); i++) {
-        cout << intVector[i] << " ";
+    vector<int> vector1;
+    for (int i = 0; i < 10; i++) {
+        vector1.push_back(2 * (i * 3 + 1) + 1);
+    }
+
+    vector<int> vector2(10);
+    vector<int>::iterator it = vector2.begin();
+    while (it != vector2.end()) {
+        *it = rand() % 100;
+        *it = *it % 2 == 0 ? *it : *it + 1;
+        ++it;
+    }
+
+    sort(vector1.begin(), vector1.end());
+    sort(vector2.begin(), vector2.end());
+    vector<int> vector3;
+    merge(vector1.begin(), vector1.end(), vector2.begin(), vector2.end(), back_inserter(vector3));
+
+    cout << "Vector 1: " << endl;
+    for (auto n : vector1) {
+        cout << n << " ";
     }
     cout << endl;
 
-    // Перевірка роботи з класами PassengerTrain та Plain
-    Vector<Base*> mediaVector;
+    cout << "Vector 2: " << endl;
+    for (auto n : vector2) {
+        cout << n << " ";
+    }
+    cout << endl;
 
-    while (true) {
-        int choice = showMenu();
-        if (choice == 3) {
-            break;
-        }
+    cout << "Vector 3: " << endl;
+    for (auto n : vector3) {
+        cout << n << " ";
+    }
+    cout << endl;
 
+    vector<Base*> baseVector;
+    int choice = 0;
+    while (choice != 3) {
+        choice = showMenu();
         switch (choice) {
             case 1: {
                 PassengerTrain* train = new PassengerTrain();
                 cin >> *train;
-                mediaVector.push_back(train);
+                baseVector.push_back(train);
                 break;
             }
             case 2: {
                 Plain* plane = new Plain();
                 cin >> *plane;
-                mediaVector.push_back(plane);
+                baseVector.push_back(plane);
                 break;
             }
+            case 3:
+                break;
             default:
-                cout << "Неправильний вибір, спробуйте ще раз.\n";
-            continue;
+                cout << "Невірний вибір" << endl;
         }
     }
 
-    cout << "\nІнформація про об'єкти:\n";
-    for (int i = 0; i < mediaVector.getSize(); i++) {
-        mediaVector[i]->displayBaseInfo();
+    vector<Base*> baseVector2(baseVector);
+    vector<Base*>::iterator baseIterator1 = baseVector.begin();
+    vector<Base*>::iterator baseIterator2 = baseVector2.begin();
+
+    while (baseIterator1 != baseVector.end()) {
+        if (dynamic_cast<PassengerTrain*>(*baseIterator1)) {
+            baseIterator1 = baseVector.erase(baseIterator1);
+        } else {
+            ++baseIterator1;
+        }
     }
 
-    cout << "\nВиклик чисто віртуального методу:\n";
-    for (int i = 0; i < mediaVector.getSize(); i++) {
-        mediaVector[i]->somePureVirtualMethod();
+    while (baseIterator2 != baseVector2.end()) {
+        if (dynamic_cast<Plain*>(*baseIterator2)) {
+            baseIterator2 = baseVector2.erase(baseIterator2);
+        } else {
+            ++baseIterator2;
+        }
     }
 
-    for (int i = 0; i < mediaVector.getSize(); i++) {
-        delete mediaVector[i];
+    cout << "Base vector 1:" << endl;
+    for (auto base : baseVector) {
+        if (auto* train = dynamic_cast<PassengerTrain*>(base)) {
+            cout << *train << endl;
+            train->showInfo();
+        } else if (auto* plane = dynamic_cast<Plain*>(base)) {
+            cout << *plane << endl;
+            plane->showInfo();
+        }
+    }
+
+    cout << endl;
+    cout << "Base vector 2: " << endl;
+    for (auto base : baseVector2) {
+        if (auto* train = dynamic_cast<PassengerTrain*>(base)) {
+            cout << *train << endl;
+            train->showInfo();
+        } else if (auto* plane = dynamic_cast<Plain*>(base)) {
+            cout << *plane << endl;
+            plane->showInfo();
+        }
     }
 
     return 0;

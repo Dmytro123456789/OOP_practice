@@ -35,3 +35,21 @@ std::istream& operator>>(std::istream& in, Plain& plane) {
     in >> plane.generalSeats;
     return in;
 }
+
+void Plain::showInfo() const {
+    displayBaseInfo(); // Виведення інформації базового класу
+    // Додайте виведення специфічної інформації для Plain
+    cout << "Додаткові дані для літака" << endl;
+}
+
+std::ostream& operator<<(std::ostream& os, const Plain& plane) {
+    // Виведіть специфічну інформацію про літак
+    os << "Інформація про літак:\n";
+    os << "ID: " << plane.id << "\n";
+    os << "Пункт відправлення: " << plane.departureStation << "\n";
+    os << "Пункт призначення: " << plane.destinationStation << "\n";
+    os << "Час відправлення: " << plane.departureTime << "\n";
+    os << "Тривалість подорожі: " << plane.travelDuration << " годин\n";
+    os << "Число загальних місць: " << plane.generalSeats << "\n";
+    return os;
+}

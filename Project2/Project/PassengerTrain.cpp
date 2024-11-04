@@ -63,3 +63,9 @@ bool PassengerTrain::operator==(const PassengerTrain& other) const {
 void PassengerTrain::somePureVirtualMethod() {
     cout << "Реалізація чисто віртуального методу в класі PassengerTrain." << endl;
 }
+
+void PassengerTrain::showInfo() const {
+    displayBaseInfo(); // Виведення інформації базового класу
+    // Додайте виведення специфічної інформації для PassengerTrain
+    cout << "Додаткові дані для пасажирського поїзда" << endl;
+}

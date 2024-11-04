@@ -29,6 +29,8 @@ public:
     friend ostream& operator<<(ostream& out, const PassengerTrain& train);
     bool operator==(const PassengerTrain& other) const;
 
+    void showInfo() const;
+
     void somePureVirtualMethod() override;
 };
 
