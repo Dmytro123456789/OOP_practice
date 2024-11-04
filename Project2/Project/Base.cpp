@@ -16,3 +16,4 @@ void Base::displayBaseInfo() const {
     cout << "Тривалість подорожі: " << travelDuration << " годин" << endl;
     cout << "Число загальних місць: " << generalSeats << endl;
 }
+

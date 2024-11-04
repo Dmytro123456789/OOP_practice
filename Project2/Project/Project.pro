@@ -7,9 +7,11 @@ SOURCES += \
         Base.cpp \
         PassengerTrain.cpp \
         Plain.cpp \
+        Vector.cpp \
         main.cpp
 
 HEADERS += \
     Base.h \
     PassengerTrain.h \
-    Plain.h
+    Plain.h \
+    Vector.h

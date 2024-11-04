@@ -15,7 +15,7 @@ public:
           const std::string& flightNumber, const std::string& departureTime,
           double travelDuration, int generalSeats);
 
-    void displayInfo() const ;
+    void displayInfo() const;
     void somePureVirtualMethod() override;
 
     friend std::istream& operator>>(std::istream& in, Plain& plane);
